@@ -1,3 +1,5 @@
+/* jshint camelcase: false */
+
 'use strict';
 
 var request = require('request');
@@ -71,7 +73,6 @@ Weather.highs = function(zip, cb){
   });
 };
 
-
 Weather.lows = function(zip, cb){
   var url = 'http://api.wunderground.com/api/f62d84d2f24e71aa/forecast10day/q/' + zip + '.json';
   request(url, function(error, response, body){
@@ -101,5 +102,27 @@ Weather.deltas = function(zip, cb){
     cb(temps);
   });
 };
+
+Weather.moon = function(zip, cb){
+  var url = 'http://api.wunderground.com/api/f62d84d2f24e71aa/astronomy/q/' + zip + '.json';
+  request(url, function(error, response, body){
+    body = JSON.parse(body);
+    var illum = parseInt(body.astronomy.moon_phase.percentIlluminated);
+    
+    if(illum >= 0 && illum <= 5){
+      cb('new moon');
+    }else if(illum >= 6 && illum <= 44){
+      cb('crescent moon');
+    }else if(illum >= 45 && illum <= 54){
+      cb('quarter moon');
+    }else if(illum >= 56 && illum <= 94){
+      cb('gibbons moon');
+    }else if(illum >= 95 && illum <= 100){
+      cb('full moon');
+    }
+
+  });
+};
+
 
 module.exports = Weather;

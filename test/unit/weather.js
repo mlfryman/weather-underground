@@ -75,6 +75,19 @@ describe('Weather', function (){
       });
     });
   });
+  
+  describe('.moon', function(){
+    it('should return moon phase', function(done){
+      Weather.lows(37219, function(temp){
+       expect(temp).to.have.length(10);//array of low temps for 10 day forecast
+       console.log(temp);
+       done();
+      });
+    });
+  });
+
+
+
 
 });
 
