@@ -56,4 +56,50 @@ Weather.avgLow = function(zip, cb){
   });
 };
 
+Weather.highs = function(zip, cb){
+  var url = 'http://api.wunderground.com/api/f62d84d2f24e71aa/forecast10day/q/' + zip + '.json';
+  request(url, function(error, response, body){
+    body = JSON.parse(body);
+    var days = body.forecast.simpleforecast.forecastday;//this is an alias that points to the forecast array
+    var temps = [];
+
+    for(var i = 0; i < days.length; i++){
+      temps.push(parseInt(days[i].high.fahrenheit));
+    }
+    
+    cb(temps);
+  });
+};
+
+
+Weather.lows = function(zip, cb){
+  var url = 'http://api.wunderground.com/api/f62d84d2f24e71aa/forecast10day/q/' + zip + '.json';
+  request(url, function(error, response, body){
+    body = JSON.parse(body);
+    var days = body.forecast.simpleforecast.forecastday;//this is an alias that points to the forecast array
+    var temps = [];
+
+    for(var i = 0; i < days.length; i++){
+      temps.push(parseInt(days[i].low.fahrenheit));
+    }
+    
+    cb(temps);
+  });
+};
+
+Weather.deltas = function(zip, cb){
+  var url = 'http://api.wunderground.com/api/f62d84d2f24e71aa/forecast10day/q/' + zip + '.json';
+  request(url, function(error, response, body){
+    body = JSON.parse(body);
+    var days = body.forecast.simpleforecast.forecastday;//this is an alias that points to the forecast array
+    var temps = [];
+
+    for(var i = 0; i < days.length; i++){
+      temps.push(parseInt(days[i].high.fahrenheit) - parseInt(days[i].low.fahrenheit));
+    }
+    
+    cb(temps);
+  });
+};
+
 module.exports = Weather;
