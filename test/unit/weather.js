@@ -6,7 +6,7 @@
 var expect = require('chai').expect;
 var Weather = require('../../app/models/weather');
 
-describe('Weather', function (){
+describe('Weather', function(){
   describe('.high', function(){
     it('should return the high temp for today', function(done){
       Weather.high(37219, function(temp){
@@ -78,16 +78,12 @@ describe('Weather', function (){
   
   describe('.moon', function(){
     it('should return moon phase', function(done){
-      Weather.lows(37219, function(temp){
-       expect(temp).to.have.length(10);//array of low temps for 10 day forecast
-       console.log(temp);
+      Weather.moon(37219, function(phase){
+       expect(phase).to.be.ok;
+       expect(phase).to.be.a('string');
        done();
       });
     });
   });
 
-
-
-
 });
-

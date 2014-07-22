@@ -107,7 +107,8 @@ Weather.moon = function(zip, cb){
   var url = 'http://api.wunderground.com/api/f62d84d2f24e71aa/astronomy/q/' + zip + '.json';
   request(url, function(error, response, body){
     body = JSON.parse(body);
-    var illum = parseInt(body.astronomy.moon_phase.percentIlluminated);
+    console.log(body);
+    var illum = parseInt(body.moon_phase.percentIlluminated);
     
     if(illum >= 0 && illum <= 5){
       cb('new moon');
@@ -117,12 +118,10 @@ Weather.moon = function(zip, cb){
       cb('quarter moon');
     }else if(illum >= 56 && illum <= 94){
       cb('gibbons moon');
-    }else if(illum >= 95 && illum <= 100){
+    }else{
       cb('full moon');
     }
-
   });
 };
-
 
 module.exports = Weather;
